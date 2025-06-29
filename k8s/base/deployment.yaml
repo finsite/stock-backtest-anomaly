@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-backtest-anomaly
+  labels:
+    app: stock-backtest-anomaly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-backtest-anomaly
+  template:
+    metadata:
+      labels:
+        app: stock-backtest-anomaly
+    spec:
+      containers:
+      - name: stock-backtest-anomaly
+        image: stock-backtest-anomaly:latest
+        ports:
+        - containerPort: 8080
