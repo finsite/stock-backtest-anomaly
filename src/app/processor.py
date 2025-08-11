@@ -1,5 +1,4 @@
-"""
-Processor module for stock-backtest-anomaly detection.
+"""Processor module for stock-backtest-anomaly detection.
 
 Validates input messages and detects anomalies in historical data.
 Anomalies might include sudden price/volume changes or statistical deviations.
@@ -15,8 +14,7 @@ logger = setup_logger(__name__)
 
 
 def validate_input_message(message: dict[str, Any]) -> ValidatedMessage:
-    """
-    Validate the incoming raw message against the expected schema.
+    """Validate the incoming raw message against the expected schema.
 
     Args:
         message (dict[str, Any]): The raw message payload.
@@ -26,6 +24,7 @@ def validate_input_message(message: dict[str, Any]) -> ValidatedMessage:
 
     Raises:
         ValueError: If the message format is invalid.
+
     """
     logger.debug("🔍 Validating message schema...")
     if not validate_message_schema(message):
@@ -35,8 +34,7 @@ def validate_input_message(message: dict[str, Any]) -> ValidatedMessage:
 
 
 def detect_anomaly(message: ValidatedMessage) -> dict[str, Any]:
-    """
-    Detect anomalies in stock data using placeholder logic.
+    """Detect anomalies in stock data using placeholder logic.
 
     This function can be extended with Z-score, moving average divergence,
     or ML-based anomaly detection in the future.
@@ -46,6 +44,7 @@ def detect_anomaly(message: ValidatedMessage) -> dict[str, Any]:
 
     Returns:
         dict[str, Any]: The enriched message with anomaly metadata.
+
     """
     symbol = message.get("symbol", "UNKNOWN")
     price = float(message.get("price", 0))
@@ -57,7 +56,9 @@ def detect_anomaly(message: ValidatedMessage) -> dict[str, Any]:
 
     anomaly_result = {
         "anomaly_detected": is_anomaly,
-        "reason": "High price" if price > 500 else ("High volume" if volume > 1_000_000 else "None"),
+        "reason": (
+            "High price" if price > 500 else ("High volume" if volume > 1_000_000 else "None")
+        ),
     }
 
     logger.debug("📊 Anomaly check result: %s", anomaly_result)
